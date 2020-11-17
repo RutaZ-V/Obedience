@@ -25,16 +25,20 @@ class Element:
 
     def assignMatrix(self):
         if obd.drxn == 1:
-            matrix = 1
+            matrix = numpy.array([[1, 0], [0, 1]])
+            print("matrix assigned")
             return(matrix)
         elif obd.drxn == 2:
             matrix = numpy.array([[0, 1], [-1, 0]])
+            print("matrix assigned")
             return(matrix)
         elif obd.drxn == 3:
             matrix = numpy.array([[-1, 0], [0, -1]])
+            print("matrix assigned")
             return(matrix)
         elif obd.drxn == 4:
             matrix = numpy.array([[0, -1], [1, 0]])
+            print("matrix assigned")
             return(matrix)
 
 
@@ -76,10 +80,9 @@ class StepFwd(Element):
 
     def move(self, step):
         change = self.assignMatrix().dot(step)
-        print(change)
         obd.X += int(change[0])
         obd.Y += int(change[1])
-        return("moved one step forward")
+        print("moved one step forward")
 
     def turn(self):
-        pass
+        print("no turning")
