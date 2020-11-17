@@ -1,7 +1,6 @@
 from abc import abstractmethod
 import numpy
 import random
-from pip._vendor.webencodings.mklabels import generate
 
 
 class newTrack:
@@ -54,11 +53,11 @@ class Right(Element):
     def turn(self):
         if obd.drxn < 4:
             obd.drxn += 1
-            print("direction updated and now is:", obd.drxn)
+            print("Turning Right. Direction updated and now is:", obd.drxn)
             return(obd.drxn)
         else:
             obd.drxn = 1
-            print("direction updated and now is:", obd.drxn)
+            print("Turning Right. Direction updated and now is:", obd.drxn)
             return(obd.drxn)
 
 
@@ -78,6 +77,22 @@ class Left(Element):
             return(obd.drxn)
 
 
+class About(Element):
+
+    def move(self, step):
+        print("no movement")
+
+    def turn(self):
+        if obd.drxn < 3:
+            obd.drxn += 2
+            print("Turning around. Direction updated and now is:", obd.drxn)
+            return(obd.drxn)
+        else:
+            obd.drxn = obd.drxn - 2
+            print("Turning around. Direction updated and now is:", obd.drxn)
+            return(obd.drxn)
+
+
 class StepFwd(Element):
 
     step = numpy.array([[0, ], [1, ]])
@@ -92,13 +107,39 @@ class StepFwd(Element):
         print("no turning")
 
 
+class LineFwd(Element):
+
+    step = numpy.array([[0, ], [5, ]])
+
+    def move(self, step):
+        change = self.assignMatrix().dot(step)
+        obd.X += int(change[0])
+        obd.Y += int(change[1])
+        print("moved forward")
+
+    def turn(self):
+        print("no turning")
+
+
+steps = []
 step1 = StepFwd()
+step2 = LineFwd()
+steps.append(step1)
+steps.append(step2)
+
+turns = []
 turn1 = Right()
 turn2 = Left()
+turn3 = About()
+turns.append(turn1)
+turns.append(turn2)
+turns.append(turn3)
 selection = []
 selection.append(step1)
+selection.append(step2)
 selection.append(turn1)
 selection.append(turn2)
+selection.append(turn3)
 
 # Number of elements in the course
 numEl = 4
@@ -108,6 +149,6 @@ for i in range(0, numEl):
     course.append(random.choice(selection))
 
 for i in course:
-    print(i)
     i.turn()
     i.move(i.step)
+    print("current position: ", obd.X, obd.Y)
