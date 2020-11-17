@@ -1,5 +1,7 @@
 from abc import abstractmethod
 import numpy
+import random
+from pip._vendor.webencodings.mklabels import generate
 
 
 class newTrack:
@@ -41,10 +43,12 @@ class Element:
             print("matrix assigned")
             return(matrix)
 
+    step = numpy.array([[0, ], [0, ]])
+
 
 class Right(Element):
 
-    def move(self):
+    def move(self, step):
         print("no movement")
 
     def turn(self):
@@ -60,7 +64,7 @@ class Right(Element):
 
 class Left(Element):
 
-    def move(self):
+    def move(self, step):
         print("no movement")
 
     def turn(self):
@@ -86,3 +90,24 @@ class StepFwd(Element):
 
     def turn(self):
         print("no turning")
+
+
+step1 = StepFwd()
+turn1 = Right()
+turn2 = Left()
+selection = []
+selection.append(step1)
+selection.append(turn1)
+selection.append(turn2)
+
+# Number of elements in the course
+numEl = 4
+course = []
+
+for i in range(0, numEl):
+    course.append(random.choice(selection))
+
+for i in course:
+    print(i)
+    i.turn()
+    i.move(i.step)
