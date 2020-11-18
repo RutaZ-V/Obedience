@@ -1,5 +1,6 @@
 import numpy
 import random
+from matplotlib import pyplot
 
 
 points = []
@@ -7,11 +8,11 @@ intrm = []
 course = []
 
 # Define area parameters:
-xMax = 5
-yMax = 5
+xMax = 10
+yMax = 8
 
 # Define number of turns:
-xTurns = 2
+xTurns = 4
 
 # Define start and finish:
 start = numpy.array([1, 3])
@@ -76,3 +77,15 @@ def generateCourse(points, intrm, xTurns):
 
 
 generateCourse(points, intrm, xTurns)
+
+
+def plotCourse(course, xTurns):
+    x, y = zip(*course)
+    pyplot.plot(x, y)
+#     pyplot.show()
+    pyplot.scatter(x[0], y[0])
+    pyplot.scatter(x[xTurns * 2 + 2], y[xTurns * 2 + 2])
+    pyplot.show()
+
+
+plotCourse(course, xTurns)
