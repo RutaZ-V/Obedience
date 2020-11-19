@@ -12,7 +12,7 @@ xMax = 10
 yMax = 8
 
 # Define number of turns:
-xTurns = 4
+xTurns = 10
 
 # Define start and finish:
 start = numpy.array([1, 3])
