@@ -1,77 +1,91 @@
 import numpy
+import random
+from matplotlib import pyplot
 
 
-def rightTurn(drxn):
-    if drxn < 4:
-        drxn += 1
-        return(drxn)
-    else:
-        drxn = 1
-        return(drxn)
+points = []
+intrm = []
+course = []
+
+# Define area parameters:
+xMax = 10
+yMax = 8
+
+# Define number of turns:
+xTurns = 10
+
+# Define start and finish:
+start = numpy.array([1, 3])
+points.append(start)
+finish = numpy.array([4, 2])
+
+# Generate turning points:
 
 
-def leftTurn(drxn):
-    if drxn > 1:
-        drxn -= 1
-        return(drxn)
-    else:
-        drxn = 4
-        return(drxn)
+def generateTurns(xTurns):
+    i = 1
+    while i <= xTurns:
+        x = random.randint(0, xMax)
+        y = random.randint(0, yMax)
+        points.append(numpy.array([x, y]))
+        i += 1
 
 
-def assignMatrix(drxn):
-    if drxn == 1:
-        matrix = 1
-        return(matrix)
-    elif drxn == 2:
-        matrix = numpy.array([[0, 1], [-1, 0]])
-        return(matrix)
-    elif drxn == 3:
-        matrix = numpy.array([[-1, 0], [0, -1]])
-        return(matrix)
-    elif drxn == 4:
-        matrix = numpy.array([[0, -1], [1, 0]])
-        return(matrix)
-    else:
-        print("direction is wrong")
+generateTurns(xTurns)
+points.append(finish)
+
+for i in points:
+    print("points", i)
+
+# Generate intermediate turns
 
 
-def apply_func(L, x):
-    #   Applies function given by each element in L to x
-    #   Parameters
-    #   ----------
-    #   L : list containing the operations
-    #   x : the operand
+def generateIntermediates(xTurns):
+    i = 0
+    while i <= xTurns:
+        x = numpy.array([points[i][0], points[i + 1][1]])
+        print("x", x)
+        y = numpy.array([points[i + 1][0], points[i][1]])
+        print("y", y)
+        temp = []
+        temp.append(x)
+        temp.append(y)
 
-    for f in L:
-        x = f(x)
-#   Returns the result after all function applications
-    return x
+        for item in temp:
+            print("temp", item)
 
-
-class Element:
-    def __init__(self, dX, dY, dDrxn):
-        self.dX = dX
-        self.dY = dY
-        self.dDrxn = dDrxn
+        intrm.append(temp[random.randint(0, 1)])
+        i += 1
 
 
-def main():
-    #   Starting direction
-    direction = 1
-    X = 0
-    Y = 0
-#   Elements of the course
-    straight = Line(0, 5)
-    oneStepFwd = Line(0, 1)
-    oneStepBck = Line(0, -1)
-
-    turns = [rightTurn, leftTurn, rightTurn, rightTurn]
-    direction = apply_func(turns, direction)
-    print(direction)
-
-    matrix = assignMatrix(direction)
-    print(matrix)
+generateIntermediates(xTurns)
+for i in intrm:
+    print("int", i)
 
 
-main()
+def generateCourse(points, intrm, xTurns):
+
+    i = 0
+    while i <= xTurns:
+        course.append(points[i])
+        course.append(intrm[i])
+        i += 1
+    course.append(points[xTurns + 1])
+
+    for i in course:
+        print("course", i)
+
+
+generateCourse(points, intrm, xTurns)
+
+
+def plotCourse(course, xTurns):
+    x, y = zip(*course)
+    pyplot.plot(x, y)
+#     pyplot.show()
+    pyplot.scatter(x[0], y[0])
+    pyplot.scatter(x[xTurns * 2 + 2], y[xTurns * 2 + 2])
+    pyplot.show()
+
+
+plotCourse(course, xTurns)
