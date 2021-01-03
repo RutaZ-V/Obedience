@@ -14,34 +14,37 @@ def generateCoordinates(name):
     name = numpy.array([coord_x, coord_y])
     return name
 
-# Generate turning points:
+# Generate extra points:
 def generateTurns(xTurns, xMax, yMax):
     i = 1
+    # Selects random points in the field
     while i <= xTurns:
-        x = random.randint(0, xMax)
-        y = random.randint(0, yMax)
-        points.append(numpy.array([x, y]))
+        coord_x = random.randint(0, xMax)
+        coord_y = random.randint(0, yMax)
+        points.append(numpy.array([coord_x, coord_y]))
         i += 1
 
 # Generate intermediate turns
 def generateIntermediates(xTurns):
     i = 0
     while i <= xTurns:
-        x = numpy.array([points[i][0], points[i + 1][1]])
-        y = numpy.array([points[i + 1][0], points[i][1]])
+        option1 = numpy.array([points[i][0], points[i + 1][1]])
+        option2 = numpy.array([points[i + 1][0], points[i][1]])
         
         temp = []
-        temp.append(x)
-        temp.append(y)
+        temp.append(option1)
+        temp.append(option2)
+        selectedPoint = temp[random.randint(0, 1)]
+        
+        intrm.append(selectedPoint)
+        i += 1
         
         # In-process control
-        print("x", x)
-        print("y", y)
-        for item in temp:
-            print("temp", item)
-
-        intrm.append(temp[random.randint(0, 1)])
-        i += 1
+        print("Selecting intermediate points:")
+        print("option 1", option1)
+        print("option 2", option2)
+        print("Selected point: ",selectedPoint)
+        
 
 #Generate whole course
 def generateCourse(points, intrm, xTurns):

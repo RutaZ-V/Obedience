@@ -1,28 +1,27 @@
 from functions import *
 
-# Define area parameters:
+# Define area parameters
 xMax = int(input("Define the width of the field in meters: "))
 yMax = int(input("Define the length of the field in meters: "))
 
-# Define number of turns:
-xTurns = int(input("How many turns you need? "))
+# Define number of extra points
+xTurns = int(input("How many extra points you need? "))
 
 # Define start and finish
 start = generateCoordinates("start")
 points.append(start)
 finish = generateCoordinates("finish")
 
+# Generate turning points
 generateTurns(xTurns, xMax, yMax)
 
 points.append(finish)
 # In-process control
-for i in points:
-    print("points", i)
+print("Initial points:")
+for point in points:
+    print(point)
 
 generateIntermediates(xTurns)
-# In-process control
-for i in intrm:
-    print("int", i)
 
 generateCourse(points, intrm, xTurns)
 
