@@ -2,25 +2,20 @@ import numpy
 import random
 from matplotlib import pyplot
 
-
 points = []
 intrm = []
 course = []
 
-# Define area parameters:
-xMax = 10
-yMax = 8
-
-# Define number of turns:
-xTurns = 10
-
-# Define start and finish:
-start = numpy.array([1, 3])
-points.append(start)
-finish = numpy.array([4, 2])
+# Define point coordinates:
+def generateCoordinates(name):
+    coord_x, coord_y = input(f"Define {name} coordinates in format \"x,y\": ").split(sep=",")
+    coord_x = int(coord_x)
+    coord_y = int(coord_y)
+    name = numpy.array([coord_x, coord_y])
+    return name
 
 # Generate turning points:
-def generateTurns(xTurns):
+def generateTurns(xTurns, xMax, yMax):
     i = 1
     while i <= xTurns:
         x = random.randint(0, xMax)
