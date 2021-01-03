@@ -20,8 +20,6 @@ points.append(start)
 finish = numpy.array([4, 2])
 
 # Generate turning points:
-
-
 def generateTurns(xTurns):
     i = 1
     while i <= xTurns:
@@ -30,39 +28,27 @@ def generateTurns(xTurns):
         points.append(numpy.array([x, y]))
         i += 1
 
-
-generateTurns(xTurns)
-points.append(finish)
-
-for i in points:
-    print("points", i)
-
 # Generate intermediate turns
-
-
 def generateIntermediates(xTurns):
     i = 0
     while i <= xTurns:
         x = numpy.array([points[i][0], points[i + 1][1]])
-        print("x", x)
         y = numpy.array([points[i + 1][0], points[i][1]])
-        print("y", y)
+        
         temp = []
         temp.append(x)
         temp.append(y)
-
+        
+        # In-process control
+        print("x", x)
+        print("y", y)
         for item in temp:
             print("temp", item)
 
         intrm.append(temp[random.randint(0, 1)])
         i += 1
 
-
-generateIntermediates(xTurns)
-for i in intrm:
-    print("int", i)
-
-
+#Generate whole course
 def generateCourse(points, intrm, xTurns):
 
     i = 0
@@ -75,17 +61,25 @@ def generateCourse(points, intrm, xTurns):
     for i in course:
         print("course", i)
 
-
-generateCourse(points, intrm, xTurns)
-
-
+#Plot the course
 def plotCourse(course, xTurns):
     x, y = zip(*course)
     pyplot.plot(x, y)
-#     pyplot.show()
     pyplot.scatter(x[0], y[0])
     pyplot.scatter(x[xTurns * 2 + 2], y[xTurns * 2 + 2])
     pyplot.show()
 
+generateTurns(xTurns)
 
+points.append(finish)
+# In-process control
+for i in points:
+    print("points", i)
+
+generateIntermediates(xTurns)
+# In-process control
+for i in intrm:
+    print("int", i)
+
+generateCourse(points, intrm, xTurns)
 plotCourse(course, xTurns)
