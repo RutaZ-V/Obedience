@@ -61,9 +61,22 @@ def generateCourse(points, intrm, xTurns):
 
 #Plot the course
 def plotCourse(course, xTurns):
+    # Plot course
     x, y = zip(*course)
-    pyplot.plot(x, y)
-    pyplot.scatter(x[0], y[0])
-    pyplot.scatter(x[xTurns * 2 + 2], y[xTurns * 2 + 2])
+    pyplot.plot(x, y, '-o')
+
+    #Add numbers to points
+    i = 1
+    while i <= len(x)-2:
+        pyplot.text(x[i], y[i], i)
+        i+=1
+
+
+    # Plot start
+    pyplot.plot(x[0], y[0], '-o')
+    pyplot.text(x[0], y[0],'Start')
+    # Plot finish
+    pyplot.plot(x[-1], y[-1], '-o')
+    pyplot.text(x[-1], y[-1], 'Finish')
     pyplot.show()
 
